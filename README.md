@@ -1,11 +1,11 @@
-# FreelanceAndPaymentTracker
+# Freelance Projects And Payments Tracker
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 
-**FreelanceFlow** is a powerful, self-hosted web application designed for freelancers to effortlessly track their active projects, manage client details, and monitor payments. Say goodbye to messy spreadsheets and generate invoices with just a click.
+**Freelance Projects And Payments Tracker** is a powerful, self-hosted web application designed for freelancers to effortlessly track their active projects, manage client details, and monitor payments. Say goodbye to messy spreadsheets and generate invoices with just a click.
 
 
 [🔗 Live Demo Link] | [📂 Bug Report] | [💡 Feature Request]
