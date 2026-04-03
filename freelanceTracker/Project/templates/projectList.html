@@ -1,0 +1,76 @@
+{% extends 'baseProject.html' %}
+
+
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Projects</h2>
+    <a href="{% url 'project-add' %}" class="btn btn-primary">+ Add Project</a>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>Title</th>
+            <th>Client</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Total Value</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr>
+            <td class="text-muted">{{ project.title }}</td>
+            <td class="text-muted">{{ project.client }}</td>
+            <td class="text-muted">{{ project.description }}</td>
+            <td class="text-muted">{{ project.start_date }}</td>
+            <td class="text-muted">{{ project.deadline }}</td>
+            <td>
+              {% if project.status == "Complete" %}
+                <span class="badge bg-success">Complete</span>
+              {% elif client.platform == "Delivered" %}
+                <span class="badge bg-primary">Delivered</span>
+              {% elif client.platform == "Pending" %}
+                <span class="badge bg-warning ">Pending</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ project.status }}</span>
+
+              {% endif %}
+            </td>
+            <td class="text-muted">{{ project.total_value }}</td>
+            <td>
+              <a href="{% url 'project-details' project.Pid %}" class="btn btn-sm btn-outline-primary me-1">View Details</a>
+              <a href="{% url 'invoice-download' project.Pid %}" class="btn btn-sm btn-outline-primary me-1">Download Invoice</a>
+              <a href="{% url 'project-update' project.Pid %}" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+              <a href="{% url 'project-delete' project.Pid %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center text-muted py-5">
+              <p class="mb-1 fs-5">No Projects found</p>
+              <small>Add your first Project to get started</small>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Count -->
+  <p class="text-muted small mt-2">Total: {{ projects|length }} project(s)</p>
+
+</div>
+
+{% endblock %}

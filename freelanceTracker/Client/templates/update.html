@@ -1,0 +1,14 @@
+{% extends 'baseclient.html' %}
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">
+            Update
+        </button>
+        <a href="{% url 'client_list'  %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

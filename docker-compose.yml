@@ -1,0 +1,80 @@
+networks:
+  freelancetrackerapp:
+    driver: bridge
+services: 
+  freelancetrackerpdf:
+    image: freelancetrackerpdf:v1
+    build: 
+      context: ./freelanceTrackerPdf/freelanceTrackerPdf
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+      - E:\SDE Project\freelancer project and payment tracking\.env
+    networks:
+      - freelancetrackerapp
+  freelancetracker:
+    image: freelancetracker:v1
+    build: 
+      context: ./freelanceTracker
+      dockerfile: Dockerfile
+    command: sh -c "python manage.py migrate && gunicorn -b 0.0.0.0:8081 freelanceTracker.wsgi:application"
+    env_file:
+      - ./.env
+      - E:\SDE Project\freelancer project and payment tracking\.env
+    ports:
+      - "8081:8081"
+    networks:
+      - freelancetrackerapp
+    environment:
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_DB=${MONGO_DB}
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      mongo_db:
+        condition: service_started
+  postgres_db:
+    image: postgres:18.3-alpine3.23
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    env_file:
+      - ./.env
+      - E:\SDE Project\freelancer project and payment tracking\.env
+    networks:
+      - freelancetrackerapp
+    volumes:
+      - ./local_db.sql:/docker-entrypoint-initdb.d/local_db.sql
+      - postgres_db:/var/lib/postgresql/data
+  mongo_db:
+    image: mongo:8.0
+    networks:
+      - freelancetrackerapp
+    env_file:
+      - ./.env
+      - E:\SDE Project\freelancer project and payment tracking\.env
+    volumes:
+      - ./atlas_data.archive.gz:/atlas_data.archive.gz
+      - ./restore_db.sh:/docker-entrypoint-initdb.d/restore_db.sh:ro
+      - mongo_db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_DB} 
+volumes:
+  postgres_db:
+  mongo_db:
+
+      

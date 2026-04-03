@@ -1,0 +1,153 @@
+{% extends 'baseLogs.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="col-md-7 mx-auto">
+
+        <div class="mb-3">
+            <a href="{% url 'project-details' projects.Pid %}"
+               class="btn btn-outline-secondary btn-sm">
+                ← back to Project Details
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header fw-semibold bg-light">
+                Add Project Log — {{ projects.title }}
+            </div>
+
+            <div class="card-body">
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="form-label fw-bold text-primary">Select Interaction Type</label>
+                    <select id="interactionTypeSelect" class="form-select form-select-lg">
+                        <option value="" selected disabled>-- Choose a Type --</option>
+                        <option value="general_note">General Note</option>
+                        <option value="revision_request">Revision Request</option>
+                        <option value="contract">Contract</option>
+                        <option value="requirement">Requirement</option>
+                        <option value="dispute">Dispute</option>
+                    </select>
+                </div>
+
+                <form method="POST" id="logForm">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="interaction_type" id="hidden_type">
+
+                    <div id="fields-general_note" class="log-group" style="display:none;">
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea name="message" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tags <small class="text-muted">(comma separated)</small></label>
+                            <input type="text" name="tags" class="form-control" placeholder="urgent, feedback, meeting">
+                        </div>
+                    </div>
+
+                    <div id="fields-revision_request" class="log-group" style="display:none;">
+                        <div class="mb-3">
+                            <label class="form-label">Revision Details</label>
+                            <textarea name="message" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Revision Number</label>
+                                <input type="number" name="revision_number" class="form-control" value="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Priority</label>
+                                <select name="priority" class="form-select">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Affected Pages</label>
+                            <input type="text" name="affected_pages" class="form-control" placeholder="Home, Contact Us">
+                        </div>
+                    </div>
+
+                    <div id="fields-contract" class="log-group" style="display:none;">
+                        <div class="mb-3">
+                            <label class="form-label">Contract Value (₹)</label>
+                            <input type="number" name="contract_value" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Terms</label>
+                            <input type="text" name="payment_terms" class="form-control" placeholder="e.g. 50% Advance">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deliverables</label>
+                            <input type="text" name="deliverables" class="form-control" placeholder="Files or Source Code links">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Signed Date</label>
+                            <input type="date" name="signed_date" class="form-control">
+                        </div>
+                    </div>
+
+                    <div id="fields-requirement" class="log-group" style="display:none;">
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tech Preference</label>
+                            <input type="text" name="tech_preference" class="form-control" placeholder="React, Node.js">
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" name="budget_flexible" class="form-check-input" id="budget">
+                            <label class="form-check-label" for="budget">Budget is Flexible</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="deadline_flexible" class="form-check-input" id="deadline">
+                            <label class="form-check-label" for="deadline">Deadline is Flexible</label>
+                        </div>
+                    </div>
+
+                    <div id="fields-dispute" class="log-group" style="display:none;">
+                        <div class="mb-3">
+                            <label class="form-label text-danger">Reason for Dispute</label>
+                            <textarea name="reason" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount Disputed (₹)</label>
+                            <input type="number" name="amount_disputed" class="form-control">
+                        </div>
+                    </div>
+
+                    <div id="submit-section" style="display:none;">
+                        <button type="submit" class="btn btn-primary w-100 mt-4 shadow-sm">
+                            Save Project Log
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('interactionTypeSelect').addEventListener('change', function() {
+        const selectedType = this.value;
+        document.getElementById('hidden_type').value = selectedType;
+        document.querySelectorAll('.log-group').forEach(group => {
+            group.style.display = 'none';
+            group.querySelectorAll('input, textarea, select').forEach(input => {
+                input.disabled = true;
+            });
+        });
+        const activeGroup = document.getElementById('fields-' + selectedType);
+        if (activeGroup) {
+            activeGroup.style.display = 'block';
+            activeGroup.querySelectorAll('input, textarea, select').forEach(input => {
+                input.disabled = false;
+            });
+            document.getElementById('submit-section').style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

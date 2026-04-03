@@ -1,0 +1,52 @@
+{% extends 'baseProject.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="mb-3">
+                <nav aria-label="breadcrumb" class="btn btn-outline-secondary btn-sm mb-2">
+                <a href="{% url 'project-list' %}"  class="btn btn-link p-0 text-decoration-none text-muted">
+                    ← Back to Project List
+                </a>
+            </nav>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0 text-center">Update Project Details</h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% for field in projectForm %}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-secondary">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Save Changes
+                            </button>
+                            <a href="{% url 'project-list' %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
