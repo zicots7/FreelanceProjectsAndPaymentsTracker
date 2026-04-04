@@ -28,7 +28,8 @@ SECRET_KEY=os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 ALLOWED_HOSTS=[os.getenv("ALLOW_HOST")]
-# later added myself for Documentation
+"""
+ #later added myself for Documentation
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -40,6 +41,8 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+"""
+
 # Application definition
 
 INSTALLED_APPS = [
