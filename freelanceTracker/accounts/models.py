@@ -8,6 +8,7 @@ class Customer(AbstractUser):
         ('client','client'),
     ]
     role = models.CharField(choices=ROLE_CHOICES,max_length=20,default='client',null=False)
+    is_demo = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.username} ({self.role})"
     def is_admin(self):

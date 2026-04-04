@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from accounts.decorators import admin_required,client_required
+from accounts.decorators import admin_required,client_required,demo_readonly
 from Project.models import Project
 from django.http import HttpResponse
 import requests
@@ -9,6 +9,7 @@ from datetime import datetime
 load_dotenv()
 
 @client_required
+@demo_readonly
 def clientinvoiceDownload(request,id):
     projects = get_object_or_404(
         Project.objects.select_related('client'), Pid=id

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from accounts.decorators import admin_required
+from accounts.decorators import admin_required,demo_readonly
 from .models import Project
 from .form import ProjectForm
 from Milestone.models import Milestone
@@ -14,6 +14,8 @@ def projectList(request):
     """
     projects = Project.objects.all()
     return render(request,'projectList.html',{'projects':projects})
+
+@demo_readonly
 @admin_required
 def addProject(request):
     """
@@ -38,6 +40,7 @@ def addProject(request):
         projectForm = ProjectForm()
     return render(request,'addProject.html',{'projectForm':projectForm})
 
+@demo_readonly
 @admin_required
 def deleteProject(request,id):
     """
@@ -52,7 +55,7 @@ def deleteProject(request,id):
         return redirect('project-list')
     return render(request,'deleteProject.html',{'projects':projects})
 
-
+@demo_readonly
 @admin_required
 def updateProject(request,id):
     """

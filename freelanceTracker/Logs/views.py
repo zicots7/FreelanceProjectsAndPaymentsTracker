@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
-from accounts.decorators import admin_required
+from accounts.decorators import admin_required,demo_readonly
 from .mongoDB import collection
 from Project.models import Project
 from datetime import datetime
 import uuid
 @admin_required
+@demo_readonly
 def logs(request, id):
     projects = Project.objects.get(Pid=id)
     logs = list(collection.find(
@@ -15,6 +16,7 @@ def logs(request, id):
         'logs': logs
     })
 @admin_required
+@demo_readonly
 def admin_addLogs(request,id):
     projects = Project.objects.get(Pid=id)
     if request.method =="POST":
@@ -65,6 +67,7 @@ def admin_addLogs(request,id):
         return redirect('project-details',id=projects.Pid)
     return render(request, 'addLogs.html', {'projects':projects})
 @admin_required
+@demo_readonly
 def admin_deleteLogs(request,id,log_id):
     projects = Project.objects.get(Pid=id)
     if request.method =="POST":

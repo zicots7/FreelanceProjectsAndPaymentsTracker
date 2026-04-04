@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from accounts.decorators import admin_required
+from accounts.decorators import admin_required,demo_readonly
 from .form import paymentForm
 from .models import Payment
 from Milestone.models import Milestone
@@ -8,6 +8,7 @@ from django.contrib import messages
 from io import BytesIO
 import openpyxl
 @admin_required
+@demo_readonly
 def addPayment(request,id):
     """
     :param request: POST request
@@ -30,6 +31,7 @@ def addPayment(request,id):
 
     return render(request,'addPayment.html',contexts)
 @admin_required
+@demo_readonly
 def updatePayment(request,id):
     """
 
@@ -37,15 +39,17 @@ def updatePayment(request,id):
     :param id: project id and payment id
     :return: payment form and payment id ,project id
     """
-    payment = Payment.objects.get(id=id)
+    payment = get_object_or_404(Payment, id=id)
     projects = payment.milestone.project_name
     if request.method == "POST":
         form = paymentForm(request.POST, instance=payment)
+        form.fields['milestone'].queryset = Milestone.objects.filter(project_name=projects)
         if form.is_valid():
             form.save()
             return redirect('project-details', id=projects.Pid)
     else:
         form = paymentForm(instance=payment)
+        form.fields['milestone'].queryset = Milestone.objects.filter(project_name=projects)
         contexts = {
             "payment": payment,
             "projects": projects,
@@ -53,6 +57,7 @@ def updatePayment(request,id):
         }
     return render(request,'updatePayment.html',contexts)
 @admin_required
+@demo_readonly
 def deletePayment(request,id):
     """
     :param request: POST request as parameter

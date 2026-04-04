@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from accounts.decorators import admin_required
+from accounts.decorators import admin_required,demo_readonly
 from .form import MilestoneForm
 from.models import Milestone
 from Project.models import Project
 @admin_required
+@demo_readonly
 def addMilestone(request,id):
     """
 
@@ -27,6 +28,7 @@ def addMilestone(request,id):
     return render(request,'addMilestone.html',contexts)
 
 @admin_required
+@demo_readonly
 def updateMilestone(request,id):
     """
 
@@ -50,6 +52,7 @@ def updateMilestone(request,id):
         }
     return render(request,'updateMilestone.html',contexts)
 @admin_required
+@demo_readonly
 def deleteMilestone(request,id):
     """
 
