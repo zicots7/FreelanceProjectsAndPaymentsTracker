@@ -62,9 +62,9 @@ INSTALLED_APPS = [
     'admin_portal',
     'accounts',
     'Logs',
-'drf_spectacular',
 
 ]
+#'drf_spectacular',
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
