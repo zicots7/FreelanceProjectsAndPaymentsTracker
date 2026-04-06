@@ -59,7 +59,8 @@
 | ![Client List](./screenshots/Screenshot%202026-04-03%20180530.png) | ![Project List](./screenshots/Screenshot%202026-04-03%20182157.png) |
 | **Project Details** | **Generated Invoice (Spring Boot)** |
 | ![Project Details](./screenshots/Screenshot%202026-04-03%20180657.png) | ![Invoice Screenshot](./screenshots/invoice.png) |
-
+ **PowerBi Dadhboard** |
+![Dashboard Screenshot](./screenshots/Dashboard.png) |
 
 ---
 
