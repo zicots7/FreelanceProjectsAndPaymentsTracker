@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib import messages
 from accounts.decorators import admin_required,demo_readonly
 from .mongoDB import collection
 from Project.models import Project
@@ -64,6 +65,10 @@ def admin_addLogs(request,id):
                 "tags": request.POST.get('tags', '').split(','),
             }
         logs=collection.insert_one(add_fields)
+        messages.success(
+            request,
+            f" Log is successfully added"
+        )
         return redirect('project-details',id=projects.Pid)
     return render(request, 'addLogs.html', {'projects':projects})
 @admin_required
@@ -72,4 +77,8 @@ def admin_deleteLogs(request,id,log_id):
     projects = Project.objects.get(Pid=id)
     if request.method =="POST":
         collection.delete_one({"log_id":log_id})
+        messages.warning(
+            request,
+            f" Log is successfully Deleted"
+        )
     return redirect('project-details',id=projects.Pid)

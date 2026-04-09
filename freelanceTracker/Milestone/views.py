@@ -3,6 +3,7 @@ from accounts.decorators import admin_required,demo_readonly
 from .form import MilestoneForm
 from.models import Milestone
 from Project.models import Project
+from django.contrib import messages
 @admin_required
 @demo_readonly
 def addMilestone(request,id):
@@ -19,6 +20,10 @@ def addMilestone(request,id):
             milestone = milestoneForm.save(commit=False)
             milestone.project_name = projects
             milestone.save()
+            messages.success(
+                request,
+                f" Milestone -- {milestone.description} -- is successfully added"
+            )
             return redirect('project-details',id=projects.Pid)
     else:
         milestoneForm=MilestoneForm()
@@ -42,6 +47,10 @@ def updateMilestone(request,id):
         milestoneForm = MilestoneForm(request.POST,instance=milestone)
         if milestoneForm.is_valid():
             milestoneForm.save()
+            messages.success(
+                request,
+                f" Milestone -- {milestone.description} -- is successfully Updated"
+            )
             return redirect('project-details',id=projects.Pid)
     else:
         milestoneForm = MilestoneForm(instance=milestone)
@@ -65,6 +74,10 @@ def deleteMilestone(request,id):
     if request.method == "POST":
         milestone = Milestone.objects.get(id=id)
         milestone.delete()
+        messages.warning(
+            request,
+            f" Milestone -- {milestone.description} -- is successfully Deleted"
+        )
         return redirect('project-details',id=projects.Pid)
     else:
         contexts={

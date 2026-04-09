@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freelancetracker-deployment
+  namespace: freelance-tracker
+  labels:
+    app: freelancetracker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: freelancetracker
+  template:
+    metadata:
+      labels:
+        app: freelancetracker
+    spec:
+      containers:
+        - name: freelancetracker
+          image: 'zico7/freelance_and_payment_tracker:freelancetracker'
+          ports:
+            - containerPort: 8081
+          env:
+          - name: MONGO_HOST
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MONGO_HOST
+          - name: MONGO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MONGO_ROOT_USER
+          - name: MONGO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MONGO_ROOT_PASSWORD
+          - name: MONGO_DB
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MONGO_DB
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: POSTGRES_DB
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: POSTGRES_HOST
+          - name: FREELANCETRACKERPDF
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: FREELANCETRACKERPDF
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: SECRET_KEY
+          - name: ALLOW_HOST
+            value: '*'
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: freelancetracker-service
+  namespace: freelance-tracker
+spec:
+  selector:
+    app: freelancetracker
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
+      nodePort: 30000

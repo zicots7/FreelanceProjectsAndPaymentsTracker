@@ -21,22 +21,22 @@
                         <span class="fw-semibold text-dark">
                             {{ projects.client }}
                         </span>
-                        <span class="badge bg-secondary ms-2">
-                            {{ projects.client.platform }}
-                        </span>
+                         {% if projects.client.platform == 'Direct' %}
+                        <span class="badge bg-warning text-dark fs-6">Direct</span>
+                        {% elif projects.client.platform == 'Upwork' %}
+                            <span class="badge bg-primary text-dark fs-6">Upwork</span>
+                        {% elif projects.client.platform == 'Fiverr' %}
+                            <span class="badge bg-success text-dark fs-6">Fiverr</span>
+                        {% endif %}
                     </p>
                 </div>
                 <div class="text-end">
                     {% if projects.status == 'Pending' %}
-                        <span class="badge bg-primary fs-6">Pending</span>
-                    {% elif projects.status == 'completed' %}
-                        <span class="badge bg-success fs-6">Completed</span>
+                        <span class="badge bg-warning text-dark fs-6">Pending</span>
+                    {% elif projects.status == 'Complete' %}
+                        <span class="badge bg-success text-dark fs-6">Completed</span>
                     {% elif projects.status == 'Delivered' %}
-                        <span class="badge bg-warning text-dark fs-6">Delivered</span>
-                    {% else %}
-                        <span class="badge bg-secondary fs-6">
-                            {{ projects.status }}
-                        </span>
+                        <span class="badge bg-primary text-dark fs-6">Delivered</span>
                     {% endif %}
                 </div>
             </div>
@@ -238,9 +238,15 @@
                     </p>
                     <p class="mb-2">
                         <span class="text-muted">Platform:</span>
-                        <span class="ms-2">
-                            {{ projects.client.platform }}
-                        </span>
+                           {% if projects.client.platform == "Upwork" %}
+                            <span class="badge bg-primary text-dark">Upwork</span>
+                          {% elif projects.client.platform == "Fiverr" %}
+                            <span class="badge bg-success text-dark">Fiverr</span>
+                          {% elif projects.client.platform == "Direct" %}
+                            <span class="badge bg-warning text-dark">Direct</span>
+                          {% else %}
+                            <span class="badge bg-secondary">{{ project.status }}</span>
+                          {% endif %}
                     </p>
                     <p class="mb-0">
                         <span class="text-muted">Company:</span>

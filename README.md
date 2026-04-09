@@ -36,13 +36,16 @@
 
 **Backend:**
 - [Spring Boot / Python Django ] - Robust REST API handling business logic with Java Spring Boot Microservice for invoice generation.
-- [Django authentication] - For secure user authentication.
+- [Django authentication] - For secure user authentication based on roles.
 
 
 **Database & DevOps:**
 - [PostgreSQL ] - Relational data storage for clients,payments,project details, milesotne.
 - [MongoDB ] - NoSQL data base storage to store Unstructured communication logs of client and freelancer.
 - [Docker ]- Containerization for seamless deployment.
+- [Kubernetes ] - For Orchestration so for better Scalability .
+- [Git/Github ] - For version control.
+- [Github Actions ] - For Automation of test,build and docker image build usign Pipelines .
 - [Render ]- for deployment.
 
 
@@ -59,8 +62,9 @@
 | ![Client List](./screenshots/Screenshot%202026-04-03%20180530.png) | ![Project List](./screenshots/Screenshot%202026-04-03%20182157.png) |
 | **Project Details** | **Generated Invoice (Spring Boot)** |
 | ![Project Details](./screenshots/Screenshot%202026-04-03%20180657.png) | ![Invoice Screenshot](./screenshots/invoice.png) |
- **PowerBi Dadhboard** |
-![Dashboard Screenshot](./screenshots/Dashboard.png) |
+ **PowerBi Dadhboard** |**Kubernetes Terminal** |
+![Dashboard Screenshot](./screenshots/Dashboard.png) |  ![Kubernetes Terminal Screenshot](./screenshots/k8s.png) |
+
 
 ---
 
@@ -73,7 +77,8 @@ Follow these steps to get the project running locally on your machine.
 
 ### Prerequisites
 
-- Docker & Docker Compose (recommended)
+- Docker & Docker Compose (Recommended)
+- Kubernetes or Minikube or Kubernetes in Docker Desktop (KIND) (Optional)
 
 ### Other way of installation
 

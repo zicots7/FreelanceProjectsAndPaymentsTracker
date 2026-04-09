@@ -37,13 +37,13 @@
             <td class="text-muted">{{ project.deadline }}</td>
             <td>
               {% if project.status == "Complete" %}
-                <span class="badge bg-success">Complete</span>
-              {% elif client.platform == "Delivered" %}
-                <span class="badge bg-primary">Delivered</span>
-              {% elif client.platform == "Pending" %}
-                <span class="badge bg-warning ">Pending</span>
+                <span class="badge bg-success text-dark">Complete</span>
+              {% elif project.status == "Delivered" %}
+                <span class="badge bg-primary text-dark">Delivered</span>
+              {% elif project.status == "Pending" %}
+                <span class="badge bg-warning text-dark">Pending</span>
               {% else %}
-                <span class="badge bg-secondary">{{ project.status }}</span>
+                <span class="badge bg-secondary text-dark">{{ project.status }}</span>
 
               {% endif %}
             </td>

@@ -21,6 +21,10 @@ def addPayment(request,id):
         form.fields['milestone'].queryset = Milestone.objects.filter(project_name=projects)
         if form.is_valid():
             form.save()
+            messages.success(
+                request,
+                f" Payment is successfully added"
+            )
             return redirect('project-details',id=projects.Pid)
     else:
         form = paymentForm()
@@ -46,6 +50,10 @@ def updatePayment(request,id):
         form.fields['milestone'].queryset = Milestone.objects.filter(project_name=projects)
         if form.is_valid():
             form.save()
+            messages.success(
+                request,
+                f" Payment is successfully Updated"
+            )
             return redirect('project-details', id=projects.Pid)
     else:
         form = paymentForm(instance=payment)
@@ -69,6 +77,10 @@ def deletePayment(request,id):
     if request.method == "POST":
         payment = Payment.objects.get(id=id)
         payment.delete()
+        messages.warning(
+            request,
+            f" Payment is successfully Deleted"
+        )
         return redirect('project-details', id=projects.Pid)
     else:
         contexts = {

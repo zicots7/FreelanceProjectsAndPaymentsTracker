@@ -3,12 +3,28 @@ from django.shortcuts import redirect,render
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, get_user_model
+def redirect_dashboard(request):
+    """
+        helper function to avoid showing login page once user already logged in .
+    :param request: takes currently logged-in user details
+    :return: return to dashboard of users based on thier roles
+    """
+    user = request.user
+    if user.role == 'admin':
+        return redirect('admin_portal')
+    elif user.role == 'client':
+        return redirect('client-dashboard')
+    else:
+        return redirect('login')
 def login_view(request):
     """
-
     :param request: POST request as parameter
     :return: authentication form
     """
+    if request.user.is_authenticated:
+
+        return redirect_dashboard(request)
+
     if request.method == 'POST':
         form = AuthenticationForm(request,data=request.POST)
         if form.is_valid():

@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib import messages
 from .form import ClientForm
 from .models import Client
 from django.contrib.auth import get_user_model
@@ -34,6 +35,10 @@ def add_client(request):
             client = form.save(commit=False)
             client.user = user
             client.save()
+            messages.success(
+                request,
+                f"Client Account -- {user.username} -- has been Created"
+            )
             return redirect("add_client")
     else:
         form = ClientForm()
@@ -49,6 +54,10 @@ def delete_client(request,id):
     if request.method == "POST":
         client = Client.objects.get(id=id)
         client.user.delete()
+        messages.warning(
+            request,
+            f"Client Account -- {client.user.username} -- has been Deleted"
+        )
         return redirect("client_list")
     return render(request,'delete.html',{"client":client})
 @admin_required
@@ -68,6 +77,10 @@ def update_client(request,id):
                 client.user.username = form.cleaned_data['username']
             if form.cleaned_data.get('password'):
                 client.user.password = form.cleaned_data['password']
+                messages.success(
+                    request,
+                    f"Client Account -- {client.user.username} -- has been Updated"
+                )
             client.user.save()
             return redirect('client_list')
     else:

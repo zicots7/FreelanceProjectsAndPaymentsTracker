@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from accounts.decorators import admin_required,demo_readonly
 from .models import Project
 from .form import ProjectForm
+from django.contrib import messages
 from Milestone.models import Milestone
 from Payment.models import Payment
 from Logs.mongoDB import collection
@@ -35,6 +36,10 @@ def addProject(request):
                 total_value = projectForm.cleaned_data['total_value']
             )
             project.save()
+            messages.success(
+                request,
+                f" Project -- {project.title} -- is successfully Added"
+            )
             return redirect('project-add')
     else:
         projectForm = ProjectForm()
@@ -52,6 +57,10 @@ def deleteProject(request,id):
     if request.method == "POST":
         projects = Project.objects.get(Pid=id)
         projects.delete()
+        messages.warning(
+            request,
+            f" Project -- {projects.title} -- is successfully Deleted"
+        )
         return redirect('project-list')
     return render(request,'deleteProject.html',{'projects':projects})
 
@@ -69,6 +78,10 @@ def updateProject(request,id):
         projectForm = ProjectForm(request.POST,instance=projects)
         if projectForm.is_valid():
             projectForm.save()
+            messages.success(
+                request,
+                f" Project -- {projects.title} -- is successfully Updated"
+            )
         return redirect('project-list')
     else:
         projectForm = ProjectForm(instance=projects)
