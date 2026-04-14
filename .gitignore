@@ -1,3 +1,5 @@
-.env
-.pbix
-__pycache__/
+*/.env/
+*.pbix
+*/__pycache__/
+*.env
+*/.idea/

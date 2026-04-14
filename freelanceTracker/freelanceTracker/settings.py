@@ -107,6 +107,7 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("POSTGRES_HOST"),
     }
+
 }
 
 
@@ -135,9 +136,7 @@ AUTH_USER_MODEL = 'accounts.Customer'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_TZ = True
 
