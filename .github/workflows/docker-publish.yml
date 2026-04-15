@@ -27,8 +27,8 @@ jobs:
       - name: Build and Push with Compose
         # This builds the images defined in your yaml and pushes them
         run: |
-          docker-compose build
-          docker-compose push
+          docker compose build
+          docker compose push
 
       - name: Deploy to Render
         run: |
