@@ -1,28 +1,29 @@
 networks:
   freelancetrackerapp:
     driver: bridge
+
 services: 
   freelancetrackerpdf:
-    image: freelancetrackerpdf:v1
+    # 1. Update image name with your DockerHub username
+    image: zico7/freelancetrackerpdf:latest 
     build: 
       context: ./freelanceTrackerPdf/freelanceTrackerPdf
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     env_file:
-      - ./.env
-      - E:\SDE Project\freelancer project and payment tracking\.env
+      - ./.env  # 2. REMOVED the Windows E:\ path here
     networks:
       - freelancetrackerapp
+
   freelancetracker:
-    image: freelancetracker:v1
+    image: zico7/freelancetracker:latest # 1. Update image name
     build: 
       context: ./freelanceTracker
       dockerfile: Dockerfile
     command: sh -c "python manage.py migrate && gunicorn -b 0.0.0.0:8081 freelanceTracker.wsgi:application"
     env_file:
-      - ./.env
-      - E:\SDE Project\freelancer project and payment tracking\.env
+      - ./.env  # 2. REMOVED the Windows E:\ path here
     ports:
       - "8081:8081"
     networks:
@@ -32,11 +33,15 @@ services:
       - MONGO_ROOT_USER=${MONGO_ROOT_USER}
       - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_DB=${MONGO_DB}
+    # Note: depends_on is fine for local, but Render ignores it
     depends_on:
       postgres_db:
         condition: service_healthy
       mongo_db:
         condition: service_started
+
+  # On Render, you should use their Managed Databases instead of these containers,
+  # but for the GitHub Action BUILD to work, these definitions are fine.
   postgres_db:
     image: postgres:18.3-alpine3.23
     healthcheck:
@@ -49,32 +54,22 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=${POSTGRES_HOST}
-      - PGDATA=/var/lib/postgresql/data/pgdata
     env_file:
-      - ./.env
-      - E:\SDE Project\freelancer project and payment tracking\.env
+      - ./.env # 2. REMOVED the Windows E:\ path here
     networks:
       - freelancetrackerapp
-    volumes:
-      - ./local_db.sql:/docker-entrypoint-initdb.d/local_db.sql
-      - postgres_db:/var/lib/postgresql/data
+
   mongo_db:
     image: mongo:8.0
     networks:
       - freelancetrackerapp
     env_file:
-      - ./.env
-      - E:\SDE Project\freelancer project and payment tracking\.env
-    volumes:
-      - ./atlas_data.archive.gz:/atlas_data.archive.gz
-      - ./restore_db.sh:/docker-entrypoint-initdb.d/restore_db.sh:ro
-      - mongo_db:/data/db
+      - ./.env # 2. REMOVED the Windows E:\ path here
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=${MONGO_DB} 
+
 volumes:
   postgres_db:
   mongo_db:
-
-      
