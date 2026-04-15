@@ -5,7 +5,7 @@ networks:
 services: 
   freelancetrackerpdf:
     # 1. Update image name with your DockerHub username
-    image: zico7/freelancetrackerpdf:latest 
+    image: zico7/freelance_and_payment_tracker:freelancetrackerpdf 
     build: 
       context: ./freelanceTrackerPdf/freelanceTrackerPdf
       dockerfile: Dockerfile
@@ -17,7 +17,7 @@ services:
       - freelancetrackerapp
 
   freelancetracker:
-    image: zico7/freelancetracker:latest # 1. Update image name
+    image: zico7/freelance_and_payment_tracker:freelancetracker  # 1. Update image name
     build: 
       context: ./freelanceTracker
       dockerfile: Dockerfile
