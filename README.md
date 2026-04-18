@@ -2,6 +2,7 @@
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Django](https://img.shields.io/badge/Framework-Django%205.0-green.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 
@@ -9,16 +10,14 @@
 
 
 [🔗 Live Demo Link] | [📂 Bug Report] | [💡 Feature Request]
-
-
-#### Link for Freelance and Payment Tracker - https://freelancetracker.onrender.com/
+[https://freelancetracker.onrender.com/]
 
 
 ---
 
 
 ## 🚀 Key Features
-
+- **Role-Based Access Control (RBAC):** Distinct functionalities for Admins and CLients using a custom `Users` model.
 - **Project Management:** Track ongoing gigs, deadlines, and project statuses (Not Started, Pending, Completed).
 - **Payment & Milestone:** Monitor pending, completed, and overdue payments with automated color coding, add milestone for payments.
 - **Client CRM:** Keep all client contact information and project history in one centralized hub.
@@ -31,22 +30,22 @@
 
 
 **Frontend:**
-- [Bootstrap / css / HTML5] - Basic Component-based UI.
+- [Bootstrap/css/HTML5] - Basic Component-based UI.
 
 
 **Backend:**
-- [Spring Boot / Python Django ] - Robust REST API handling business logic with Java Spring Boot Microservice for invoice generation.
-- [Django authentication] - For secure user authentication based on roles.
+- [Spring-Boot/Python-Django] - Robust REST API handling business logic with Java Spring Boot Microservice for invoice generation.
+- [Django-authentication] - For secure user authentication based on roles.
 
 
 **Database & DevOps:**
-- [PostgreSQL ] - Relational data storage for clients,payments,project details, milesotne.
-- [MongoDB ] - NoSQL data base storage to store Unstructured communication logs of client and freelancer.
-- [Docker ]- Containerization for seamless deployment.
-- [Kubernetes ] - For Orchestration so for better Scalability .
-- [Git/Github ] - For version control.
-- [Github Actions ] - For Automation of test,build and docker image build usign Pipelines .
-- [Render ]- for deployment.
+- [PostgreSQL] - Relational data storage for clients,payments,project details, milesotne.
+- [MongoDB] - NoSQL data base storage to store Unstructured communication logs of client and freelancer.
+- [Docker]- Containerization for seamless deployment.
+- [Kubernetes] - For Orchestration so for better Scalability .
+- [Git/Github] - For version control.
+- [Github-Actions] - For Automation of test,build and docker image build usign Pipelines .
+- [Render] - for deployment.
 
 
 ---
@@ -96,7 +95,7 @@ Follow these steps to get the project running locally on your machine.
 
 ### Installation using Python for django and Maven for Java Spring Boot
 
-
+```bash
 - Using Python and JDK  make use machine has both of thier required version installed along with any IDE or Visual Studio Code(VS code)
 - First recommended to make a virtual environment using command [ python -m venv env ]
 - Activate the virtual environment using command [./env/Scripts/Activate ]
@@ -105,6 +104,7 @@ Follow these steps to get the project running locally on your machine.
 - Make sure all the database related credentials are present in the .env file .
 - Run the following Command [python manage.py runserver]
 
+```
 ## 🌐 API Documentation
 
 
@@ -123,3 +123,4 @@ Follow these steps to get the project running locally on your machine.
 ```bash
 git clone [https://github.com/zicots7/FreelanceAndPaymentTracker.git](https://github.com/zicots7/FreelanceAndPaymentTracker.git)
 cd freelance-payment-tracker
+```
